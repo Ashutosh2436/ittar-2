@@ -182,12 +182,6 @@ body.cursor-text .cursor-ring {
   opacity: 0;
 }
 
-/* ── CURSOR STATE: Hidden (on loader) ── */
-body.cursor-hidden .cursor-dot,
-body.cursor-hidden .cursor-ring,
-body.cursor-hidden .cursor-label {
-  opacity: 0;
-}
 
 
 

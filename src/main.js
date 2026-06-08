@@ -289,37 +289,47 @@ function updateParticles(deltaTime) {
 function load3DAssets() {
   const loader = new GLTFLoader();
   const dracoLoader = new DRACOLoader();
-  
-  // Set decoder path pointing to copied assets
-  dracoLoader.setDecoderPath('/draco/');
+
+  // BUG FIX: Use import.meta.env.BASE_URL so paths work on both
+  // localhost (/draco/) AND GitHub Pages (/maison-dittar/draco/)
+  const base = import.meta.env.BASE_URL;
+  dracoLoader.setDecoderPath(`${base}draco/`);
   loader.setDRACOLoader(dracoLoader);
 
   const progressPercent = document.getElementById('loader-percent');
   const progressBar = document.getElementById('loader-progress-bar');
   const loaderOverlay = document.getElementById('loader');
 
+  // Helper: smoothly dismiss the loader and reveal the site
+  function dismissLoader() {
+    gsap.to(loaderOverlay, {
+      opacity: 0,
+      duration: 1.0,
+      ease: 'power3.out',
+      onComplete: () => {
+        loaderOverlay.style.visibility = 'hidden';
+        loaderOverlay.style.pointerEvents = 'none';
+        animateHeroEntrances();
+      }
+    });
+  }
+
+  // BUG FIX: Prefix GLB path with BASE_URL for GitHub Pages compatibility
   loader.load(
-    '/assets/ittar_bottle_draco.glb',
+    `${base}assets/ittar_bottle_draco.glb`,
     (gltf) => {
       bottleModel = gltf.scene.getObjectByName('IttarBottle') || gltf.scene;
-      
-      // Extract sub-meshes for run-time updates
+
       liquidMesh = bottleModel.getObjectByName('PerfumeLiquid');
-      labelMesh = bottleModel.getObjectByName('GoldLabel');
+      labelMesh  = bottleModel.getObjectByName('GoldLabel');
 
-      // Add bottle to scene
       scene.add(bottleModel);
-
-      // Trigger initial responsive scales
       adjustScaleForViewport();
 
-      // Configure shadows and glass properties for webgl display
       bottleModel.traverse((child) => {
         if (child.isMesh) {
           child.castShadow = true;
           child.receiveShadow = true;
-          
-          // Boost physical glass parameters inside browser rendering
           if (child.material.name === 'ObsidianGlass') {
             child.material.transparent = true;
             child.material.transmission = 0.92;
@@ -336,40 +346,25 @@ function load3DAssets() {
         }
       });
 
-      // Complete preloader and reveal site smoothly
       progressPercent.innerText = '100';
       progressBar.style.width = '100%';
-
-      gsap.to(loaderOverlay, {
-        opacity: 0,
-        duration: 1.2,
-        delay: 0.5,
-        ease: 'power3.out',
-        onComplete: () => {
-          loaderOverlay.style.visibility = 'hidden';
-          loaderOverlay.style.pointerEvents = 'none';
-          
-          // Animate Hero text entrances
-          animateHeroEntrances();
-        }
-      });
-
-      // Init the ScrollTrigger timeline
+      dismissLoader();
       initScrollTimeline();
     },
     (xhr) => {
       if (xhr.total > 0) {
-        const percent = Math.floor((xhr.loaded / xhr.total) * 100);
-        // Cap at 99% until fully assembled by three.js
-        const displayPercent = Math.min(percent, 99);
-        progressPercent.innerText = displayPercent.toString();
-        progressBar.style.width = `${displayPercent}%`;
+        const pct = Math.min(Math.floor((xhr.loaded / xhr.total) * 100), 99);
+        progressPercent.innerText = pct.toString();
+        progressBar.style.width = `${pct}%`;
       }
     },
     (err) => {
-      console.error('An error occurred loading the model:', err);
-      // Fallback: hide loader if load fails to not lock user screen
-      loaderOverlay.style.display = 'none';
+      console.warn('3D model failed to load (non-fatal):', err);
+      // BUG FIX: Use opacity fade instead of display:none
+      // display:none was triggering the old MutationObserver and hiding the cursor
+      progressPercent.innerText = '100';
+      progressBar.style.width = '100%';
+      dismissLoader();
     }
   );
 }
@@ -1163,16 +1158,8 @@ function initCursor() {
     });
   });
 
-  // ── Loader hides cursor during loading ───────────────────
-  const loader = document.getElementById('loader');
-  if (loader) {
-    // Observe loader visibility to toggle cursor-hidden
-    const loaderObserver = new MutationObserver(() => {
-      const isHidden = loader.style.visibility === 'hidden' ||
-                       parseFloat(loader.style.opacity) === 0;
-      document.body.classList.toggle('cursor-hidden', !isHidden);
-    });
-    loaderObserver.observe(loader, { attributes: true, attributeFilter: ['style'] });
-  }
+  // ── Cursor is always active — no loader suppression ────────
+  // (Removed the MutationObserver: it was incorrectly adding cursor-hidden
+  //  when the 3D model error handler fired, making the cursor invisible forever)
 }
 
