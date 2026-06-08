@@ -1649,7 +1649,14 @@ main {
 
   .desktop-nav    { display: none; }
   .mobile-menu-trigger { display: flex; }
-  .audio-toggle   { display: none; }
+  
+  .audio-toggle {
+    display: flex;
+    padding: 0.6rem;
+    margin-right: -0.6rem;
+  }
+  .audio-toggle .audio-label { display: none; }
+  .header-right { gap: 1.2rem; }
 
   .brand-logo { font-size: 1.05rem; letter-spacing: 0.3em; }
 
