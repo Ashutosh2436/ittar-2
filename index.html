@@ -1,0 +1,437 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    
+    <!-- SEO Meta Tags -->
+    <title>Maison d'Ittar | Pure Luxury Perfume Oils & Oud Elixirs</title>
+    <meta name="description" content="Discover Maison d'Ittar, a luxury house of pure, non-alcoholic perfume oils. Hand-distilled from rare oud, blossoms, and precious resins. Experience interactive scroll storytelling and customization." />
+    <meta name="keywords" content="ittar, perfume oil, luxury perfume, oud, attar, non-alcoholic perfume, organic fragrance, pure essential oils, maison d'ittar" />
+    <meta name="author" content="Maison d'Ittar" />
+    
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="Maison d'Ittar | Pure Luxury Perfume Oils" />
+    <meta property="og:description" content="Immerse yourself in the scent ritual. Explore our rare, non-alcoholic Ittar collection through interactive 3D WebGL storytelling." />
+    <meta property="og:image" content="/assets/og-image.jpg" />
+
+    <!-- Google Fonts — preloaded for render performance -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400;1,600&family=Inter:wght@200;300;400;500;600&family=Cinzel:wght@400;500;600&display=swap" rel="stylesheet">
+
+    <!-- Critical Inline Styles: render dark immediately before JS loads -->
+    <style>
+      *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+      html, body { 
+        background: #05050a; 
+        color: #fff; 
+        overflow-x: hidden;
+        font-family: 'Inter', system-ui, sans-serif;
+        -webkit-font-smoothing: antialiased;
+      }
+      /* Ensure body is never white-flash */
+      body { min-height: 100vh; }
+    </style>
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22 fill=%22%23d4af37%22>⚜</text></svg>" />
+  </head>
+  <body>
+    <!-- ⚜ Premium Custom Cursor ⚜ -->
+    <div id="cursor-dot" class="cursor-dot"></div>
+    <div id="cursor-ring" class="cursor-ring">
+      <svg class="cursor-ring-svg" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <circle cx="20" cy="20" r="18" stroke="rgba(212,175,55,0.7)" stroke-width="1"/>
+      </svg>
+    </div>
+    <div id="cursor-label" class="cursor-label"></div>
+
+    <!-- Premium Preloader -->
+    <div id="loader" class="loader-container">
+      <div class="loader-content">
+        <div class="loader-logo">MAISON D'ITTAR</div>
+        <div class="loader-line-container">
+          <div id="loader-progress-bar" class="loader-progress-bar"></div>
+        </div>
+        <div class="loader-percentage"><span id="loader-percent">0</span>%</div>
+        <div class="loader-subtitle">Loading Olfactory Journey...</div>
+      </div>
+    </div>
+
+    <!-- WebGL Canvas Container -->
+    <div id="webgl-container"></div>
+
+    <!-- Subtle Golden Background Grid (Editorial Detail) -->
+    <div class="editorial-grid">
+      <div class="grid-line"></div>
+      <div class="grid-line"></div>
+      <div class="grid-line"></div>
+      <div class="grid-line"></div>
+    </div>
+
+    <!-- Luxury Navigation Header -->
+    <header class="luxury-header">
+      <div class="header-left">
+        <nav class="desktop-nav">
+          <a href="#heritage-section" class="nav-link">The House</a>
+          <a href="#notes-section" class="nav-link">Scent Profile</a>
+          <a href="#collection-section" class="nav-link">Collection</a>
+        </nav>
+        <button class="mobile-menu-trigger" aria-label="Open Menu">
+          <span></span><span></span>
+        </button>
+      </div>
+
+      <div class="header-center">
+        <a href="#" class="brand-logo">MAISON D'ITTAR</a>
+      </div>
+
+      <div class="header-right">
+        <button id="audio-toggle" class="audio-toggle" aria-label="Toggle ambient sound">
+          <span class="audio-wave">
+            <span></span><span></span><span></span><span></span>
+          </span>
+          <span class="audio-label">SOUND OFF</span>
+        </button>
+        <button id="cart-trigger" class="cart-trigger" aria-label="Open Cart">
+          <span class="cart-label">CART</span>
+          <span class="cart-count">0</span>
+        </button>
+      </div>
+    </header>
+
+    <!-- Mobile Navigation Drawer -->
+    <div id="mobile-nav-drawer" class="mobile-nav-drawer">
+      <div class="drawer-close-btn">&times;</div>
+      <nav class="mobile-nav-links">
+        <a href="#heritage-section" class="mobile-nav-link">The House</a>
+        <a href="#notes-section" class="mobile-nav-link">Scent Profile</a>
+        <a href="#collection-section" class="mobile-nav-link">Collection</a>
+        <a href="#purchase-section" class="mobile-nav-link">Order Ritual</a>
+      </nav>
+      <div class="mobile-drawer-footer">
+        <p>⚜ MAISON D'ITTAR ⚜</p>
+        <p>Pure Non-Alcoholic Attars</p>
+      </div>
+    </div>
+
+    <!-- Scroll Scroll indicator -->
+    <div class="scroll-indicator">
+      <div class="scroll-mouse">
+        <div class="scroll-wheel"></div>
+      </div>
+      <span class="scroll-text">SCROLL TO DISTILL</span>
+    </div>
+
+    <!-- Main Scroll Content -->
+    <main id="smooth-wrapper">
+      <div id="smooth-content">
+        
+        <!-- SECTION 1: HERO -->
+        <section id="hero-section" class="scroll-section">
+          <div class="hero-container">
+            <h2 class="editorial-eyebrow animate-text">ANCIENT ALCHEMY. MODERN NOBILITY.</h2>
+            <h1 class="hero-title animate-text">Elixirs <br><span class="italic-serif">Of Eternal</span><br> Essence</h1>
+            <p class="hero-subtitle animate-text">Pure, non-alcoholic perfume oils hand-distilled from wild woods, rare blossoms, and aged resins. One drop is a lifelong story.</p>
+            <div class="hero-cta-wrapper animate-text">
+              <a href="#collection-section" class="btn-luxury">
+                <span class="btn-text">EXPLORE COLLECTION</span>
+                <span class="btn-arrow">⚜</span>
+              </a>
+            </div>
+          </div>
+        </section>
+
+        <!-- SECTION 2: HERITAGE -->
+        <section id="heritage-section" class="scroll-section">
+          <div class="editorial-container">
+            <div class="editorial-layout-split">
+              <div class="editorial-empty-left">
+                <!-- Spacer for 3D model positioning -->
+              </div>
+              <div class="editorial-text-right">
+                <h2 class="section-title-serif">The Art of <br><span class="italic-serif">Slow Distillation</span></h2>
+                <div class="gold-separator"></div>
+                <p class="editorial-body">
+                  Modern spray fragrances are up to 90% synthetic alcohol, evaporating into thin air within hours. Our Ittars are crafted using the ancient hydro-distillation method.
+                </p>
+                <p class="editorial-body">
+                  Slow-boiled in sealed copper stills over clay ovens, the precious steam condensed into a base of pure, sustainably sourced Indian Sandalwood oil. 
+                </p>
+                <p class="editorial-body highlighted">
+                  We age our elixirs in dark, obsidian glass jars for a minimum of 18 months, allowing the fragrance molecules to bind, mature, and unlock unparalleled depth.
+                </p>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- SECTION 3: SCENT NOTES (INTERACTIVE NOTES EXPLORATION) -->
+        <section id="notes-section" class="scroll-section">
+          <div class="notes-container">
+            <div class="notes-header">
+              <h2 class="section-title-serif text-center">Deconstruct The <br><span class="italic-serif">Olfactory Layers</span></h2>
+              <p class="section-subtitle text-center">Tap or hover a note to disperse its essence and reveal its raw composition.</p>
+            </div>
+            
+            <div class="notes-interactive-layout">
+              <div class="notes-list-left">
+                <div class="note-item" data-note="saffron">
+                  <div class="note-number">01</div>
+                  <div class="note-content">
+                    <h3 class="note-name">Kashmiri Saffron</h3>
+                    <p class="note-type">Top Note &bull; Earthy Spice</p>
+                    <p class="note-desc">Hand-harvested crimson threads providing a warm, metallic, leathery introduction.</p>
+                  </div>
+                </div>
+                
+                <div class="note-item" data-note="rose">
+                  <div class="note-number">02</div>
+                  <div class="note-content">
+                    <h3 class="note-name">Damascus Rose</h3>
+                    <p class="note-type">Heart Note &bull; Floral Nectar</p>
+                    <p class="note-desc">Freshly plucked petals hydro-distilled at dawn. Deep, honeyed, and intensely romantic.</p>
+                  </div>
+                </div>
+              </div>
+
+              <div class="notes-visual-center">
+                <!-- Spaced for zoomed 3D bottle and particle effect -->
+              </div>
+
+              <div class="notes-list-right">
+                <div class="note-item" data-note="oud">
+                  <div class="note-number">03</div>
+                  <div class="note-content">
+                    <h3 class="note-name">Assam Oud</h3>
+                    <p class="note-type">Base Note &bull; Liquid Gold</p>
+                    <p class="note-desc">Aged agarwood resin. Complex, smokey, animalic, and hypnotically masculine.</p>
+                  </div>
+                </div>
+
+                <div class="note-item" data-note="amber">
+                  <div class="note-number">04</div>
+                  <div class="note-content">
+                    <h3 class="note-name">Fossil Amber</h3>
+                    <p class="note-type">Base Note &bull; Resinous Warmth</p>
+                    <p class="note-desc">A warm, powdery chord of ancient tree resins, sweet vanilla, and benzoin.</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- SECTION 4: THE COLLECTION (INTERACTIVE COLLECTION VIEW) -->
+        <section id="collection-section" class="scroll-section">
+          <div class="collection-container">
+            <h2 class="section-title-serif text-center">The Imperial <br><span class="italic-serif">Trio</span></h2>
+            <p class="section-subtitle text-center">Switch between our core blends. The vessel and elements adapt to their unique soul.</p>
+            
+            <div class="collection-selector-nav">
+              <button class="collection-nav-btn active" data-product="oud-imperial">
+                <span class="btn-num">I</span> OUD IMPÉRIAL
+              </button>
+              <button class="collection-nav-btn" data-product="rose-sultan">
+                <span class="btn-num">II</span> ROSE AL-SULTAN
+              </button>
+              <button class="collection-nav-btn" data-product="amber-noir">
+                <span class="btn-num">III</span> AMBRE NOIR
+              </button>
+            </div>
+
+            <div class="collection-display-wrapper">
+              <div class="collection-product-info active" id="info-oud-imperial">
+                <div class="info-meta">BASE: 12-YEAR AGED AGARWOOD</div>
+                <h3 class="product-display-title">Oud Impérial</h3>
+                <p class="product-display-desc">The crown jewel of our house. An intense, hypnotic blend of aged Assam Oud, damp earth, and soft woodsmoke. Unapologetically rich, powerful, and mysterious.</p>
+                <div class="product-attributes">
+                  <div class="attr-item"><span>Longevity:</span> <span>Eternal (24h+)</span></div>
+                  <div class="attr-item"><span>Projection:</span> <span>Intimate / Sillage</span></div>
+                  <div class="attr-item"><span>Character:</span> <span>Regal, Deep, Smoky</span></div>
+                </div>
+                <button class="btn-luxury buy-now-collection" data-id="oud-imperial">
+                  <span class="btn-text">SELECT ELIXIR &mdash; $180</span>
+                </button>
+              </div>
+
+              <div class="collection-product-info" id="info-rose-sultan">
+                <div class="info-meta">BASE: SANDALWOOD & MUSK</div>
+                <h3 class="product-display-title">Rose Al-Sultan</h3>
+                <p class="product-display-desc">A deep, velvety rose scent opening with fresh citrus and saffron, before descending into a warm bed of precious white musk, sandalwood, and sweet damask honey.</p>
+                <div class="product-attributes">
+                  <div class="attr-item"><span>Longevity:</span> <span>18 Hours</span></div>
+                  <div class="attr-item"><span>Projection:</span> <span>Moderate</span></div>
+                  <div class="attr-item"><span>Character:</span> <span>Velvety, Floral, Sensual</span></div>
+                </div>
+                <button class="btn-luxury buy-now-collection" data-id="rose-sultan">
+                  <span class="btn-text">SELECT ELIXIR &mdash; $160</span>
+                </button>
+              </div>
+
+              <div class="collection-product-info" id="info-amber-noir">
+                <div class="info-meta">BASE: ANCIENT AMBER COAL</div>
+                <h3 class="product-display-title">Ambre Noir</h3>
+                <p class="product-display-desc">A deep, resinous embrace. Warm fossilized amber blended with vanilla bean, spiced cardamom, frankincense, and vetiver. A rich, comforting aroma of spiced wood.</p>
+                <div class="product-attributes">
+                  <div class="attr-item"><span>Longevity:</span> <span>20 Hours</span></div>
+                  <div class="attr-item"><span>Projection:</span> <span>Warm / Radiant</span></div>
+                  <div class="attr-item"><span>Character:</span> <span>Warm, Balsamic, Spiced</span></div>
+                </div>
+                <button class="btn-luxury buy-now-collection" data-id="amber-noir">
+                  <span class="btn-text">SELECT ELIXIR &mdash; $170</span>
+                </button>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- SECTION 5: PURCHASE & SPECIFICATIONS -->
+        <section id="purchase-section" class="scroll-section">
+          <div class="purchase-container">
+            <div class="purchase-layout">
+              <div class="purchase-form-side">
+                <h2 class="section-title-serif">Begin the <br><span class="italic-serif">Olfactory Ritual</span></h2>
+                <p class="purchase-intro">Every bottle is filled by hand with a glass pipette, sealed with wax, and cradled in a dark walnut presentation chest lined with velvet.</p>
+                
+                <form id="purchase-form" class="luxury-form">
+                  <div class="form-group">
+                    <label class="form-label">SELECT BLEND</label>
+                    <div class="custom-radio-group">
+                      <label class="radio-label">
+                        <input type="radio" name="blend" value="oud-imperial" checked>
+                        <span class="radio-design"></span>
+                        <span class="radio-text">Oud Impérial &bull; $180</span>
+                      </label>
+                      <label class="radio-label">
+                        <input type="radio" name="blend" value="rose-sultan">
+                        <span class="radio-design"></span>
+                        <span class="radio-text">Rose Al-Sultan &bull; $160</span>
+                      </label>
+                      <label class="radio-label">
+                        <input type="radio" name="blend" value="amber-noir">
+                        <span class="radio-design"></span>
+                        <span class="radio-text">Ambre Noir &bull; $170</span>
+                      </label>
+                    </div>
+                  </div>
+
+                  <div class="form-group">
+                    <label class="form-label" for="bottle-size">VOLUME</label>
+                    <select id="bottle-size" class="luxury-select">
+                      <option value="12ml" data-price-multiplier="1.0">12 ml (Signature Crystal Flacon)</option>
+                      <option value="24ml" data-price-multiplier="1.8">24 ml (Grand Decanter +$140)</option>
+                      <option value="3ml" data-price-multiplier="0.3">3 ml (Vial Sample -$120)</option>
+                    </select>
+                  </div>
+
+                  <div class="form-row">
+                    <div class="form-group quantity-group">
+                      <label class="form-label">QUANTITY</label>
+                      <div class="quantity-picker">
+                        <button type="button" class="qty-btn" id="qty-minus">-</button>
+                        <input type="number" id="qty-value" value="1" min="1" readonly>
+                        <button type="button" class="qty-btn" id="qty-plus">+</button>
+                      </div>
+                    </div>
+
+                    <div class="form-group total-group">
+                      <label class="form-label">TOTAL PRICE</label>
+                      <div class="total-price-display">$<span id="calculated-total">180</span></div>
+                    </div>
+                  </div>
+
+                  <button type="submit" class="btn-luxury btn-submit-order">
+                    <span class="btn-text">ADD TO CART</span>
+                    <span class="btn-arrow">⚜</span>
+                  </button>
+                </form>
+              </div>
+              
+              <div class="purchase-info-side">
+                <!-- Spacer for 3D model positioning -->
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- FOOTER -->
+        <footer class="luxury-footer">
+          <div class="footer-grid-layout">
+            <div class="footer-brand">
+              <h3 class="footer-logo">MAISON D'ITTAR</h3>
+              <p class="footer-tagline">Purveyors of non-alcoholic perfume oil. Distilled slowly, worn forever.</p>
+            </div>
+            
+            <div class="footer-links">
+              <h4 class="footer-title">THE HOUSE</h4>
+              <a href="#heritage-section" class="footer-link">Sourcing & Craft</a>
+              <a href="#notes-section" class="footer-link">Ingredient Alchemy</a>
+              <a href="#" class="footer-link">Bespoke Blending</a>
+              <a href="#" class="footer-link">Store Locator</a>
+            </div>
+
+            <div class="footer-links">
+              <h4 class="footer-title">CLIENT SERVICE</h4>
+              <a href="#" class="footer-link">Shipping & Customs</a>
+              <a href="#" class="footer-link">Returns & Care</a>
+              <a href="#" class="footer-link">Contact Atelier</a>
+              <a href="#" class="footer-link">FAQs</a>
+            </div>
+
+            <div class="footer-newsletter">
+              <h4 class="footer-title">THE ATELIER JOURNAL</h4>
+              <p class="newsletter-text">Subscribe to receive private invitations to rare oud crop releases.</p>
+              <form class="footer-newsletter-form" id="newsletter-form">
+                <input type="email" placeholder="Enter email address" required class="newsletter-input" aria-label="Email Address">
+                <button type="submit" class="newsletter-submit" aria-label="Subscribe">⚜</button>
+              </form>
+            </div>
+          </div>
+
+          <div class="footer-bottom">
+            <p class="copyright">&copy; 2026 Maison d'Ittar. All Rights Reserved. Designed for pure elegance.</p>
+            <div class="footer-legal">
+              <a href="#">Privacy Policy</a>
+              <a href="#">Terms of Use</a>
+            </div>
+          </div>
+        </footer>
+
+      </div>
+    </main>
+
+    <!-- Shopping Cart Drawer (HTML Sidebar) -->
+    <div id="cart-drawer" class="cart-drawer">
+      <div class="cart-drawer-header">
+        <h3 class="cart-title">Your Olfactory Selection</h3>
+        <button id="cart-close-btn" class="cart-close-btn">&times;</button>
+      </div>
+
+      <div class="cart-drawer-body">
+        <div id="cart-items-container" class="cart-items-container">
+          <!-- Dynamically populated -->
+          <div class="cart-empty-message">Your selection is currently empty.</div>
+        </div>
+      </div>
+
+      <div class="cart-drawer-footer">
+        <div class="cart-summary-row">
+          <span>Subtotal</span>
+          <span class="cart-subtotal-price">$0</span>
+        </div>
+        <p class="cart-note">Complimentary shipping and premium gift boxing included.</p>
+        <button class="btn-luxury checkout-btn" id="checkout-btn">
+          <span class="btn-text">PROCEED TO SECURE CHECKOUT</span>
+        </button>
+      </div>
+    </div>
+
+    <!-- Background overlay when cart is open -->
+    <div id="cart-overlay" class="cart-overlay"></div>
+
+    <script type="module" src="/src/main.js"></script>
+  </body>
+</html>
