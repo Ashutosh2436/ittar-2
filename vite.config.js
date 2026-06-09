@@ -2,7 +2,7 @@ import { defineConfig } from 'vite'
 
 export default defineConfig({
   // Base path for GitHub Pages: /REPO_NAME/
-  base: '/maison-dittar/',
+  base: '/ittar-2/',
   build: {
     outDir: 'dist',
     assetsDir: 'assets',
