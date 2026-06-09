@@ -426,6 +426,8 @@ body.cursor-btn   .cursor-ring { width: 62px; height: 62px; opacity: 1; }
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   gap: 2rem;
+  max-width: 1200px;
+  margin: 0 auto;
 }
 
 /* ─── PRODUCT CARD ───────────────────────────────────────── */
@@ -464,10 +466,10 @@ body.cursor-btn   .cursor-ring { width: 62px; height: 62px; opacity: 1; }
   color: var(--white);
 }
 
-.card-badge.popular {
-  background: #c04040;
-  color: var(--white);
-}
+.card-badge.popular   { background: #c04040; color: var(--white); }
+.card-badge.limited   { background: #5a3580; color: var(--white); }
+.card-badge.trending  { background: #1a7a4a; color: var(--white); }
+.card-badge.exclusive { background: #8b1a1a; color: var(--white); }
 
 /* Visual area */
 .card-visual {
@@ -1210,10 +1212,36 @@ body.cursor-btn   .cursor-ring { width: 62px; height: 62px; opacity: 1; }
 [data-color="amber"] .b-liquid { background: linear-gradient(180deg, #d2762c, #4a1000); }
 [data-color="amber"] .b-label span { color: #7a3000; }
 
+/* MUSK — lavender/grey */
+[data-color="musk"] .b-cap  { background: linear-gradient(180deg, #c8a8d8, #7a5a90); }
+[data-color="musk"] .b-neck { background: linear-gradient(180deg, #e8d8f0, #b898c8); }
+[data-color="musk"] .b-body { background: linear-gradient(160deg, #f8f0ff 0%, #c8a0d8 50%, #7a5090 100%); }
+[data-color="musk"] .b-liquid { background: linear-gradient(180deg, #b898c8, #5a3070); }
+[data-color="musk"] .b-label span { color: #5a3080; }
+
+/* JASMINE — fresh green/white */
+[data-color="jasmine"] .b-cap  { background: linear-gradient(180deg, #7acc7a, #3a8a3a); }
+[data-color="jasmine"] .b-neck { background: linear-gradient(180deg, #d0f0d0, #80c880); }
+[data-color="jasmine"] .b-body { background: linear-gradient(160deg, #f0fff0 0%, #80c880 50%, #3a7a3a 100%); }
+[data-color="jasmine"] .b-liquid { background: linear-gradient(180deg, #70b870, #2a6a2a); }
+[data-color="jasmine"] .b-label span { color: #2a6a2a; }
+
+/* SAFFRON — deep crimson/dark */
+[data-color="saffron"] .b-cap  { background: linear-gradient(180deg, #c02020, #6a0000); }
+[data-color="saffron"] .b-neck { background: linear-gradient(180deg, #e08060, #b04040); }
+[data-color="saffron"] .b-body { background: linear-gradient(160deg, #fff0e8 0%, #c04030 50%, #5a0000 100%); }
+[data-color="saffron"] .b-liquid { background: linear-gradient(180deg, #c04030, #400000); }
+[data-color="saffron"] .b-label span { color: #6a0010; }
+
 /* ─── CARD VISUAL BACKGROUNDS ────────────────────────────── */
 .card-visual.oud-bg   { background: linear-gradient(160deg, #fff9e8 0%, #f0d880 60%, #c8a040 100%); }
 .card-visual.rose-bg  { background: linear-gradient(160deg, #fff0f4 0%, #f0a0b8 60%, #b03050 100%); }
 .card-visual.amber-bg { background: linear-gradient(160deg, #fff5e8 0%, #f0c080 60%, #c06020 100%); }
+
+/* ─── NEW CARD VISUAL BACKGROUNDS ──────────────── */
+.card-visual.musk-bg    { background: linear-gradient(160deg, #f8f0ff 0%, #d8b0f0 60%, #9060b0 100%); }
+.card-visual.jasmine-bg { background: linear-gradient(160deg, #f0fff0 0%, #a0d8a0 60%, #4a904a 100%); }
+.card-visual.saffron-bg { background: linear-gradient(160deg, #fff5f0 0%, #e08060 60%, #8a2010 100%); }
 
 /* ─── SHIMMER EFFECT ON CARD VISUAL HOVER ────────────────── */
 .card-visual::after {

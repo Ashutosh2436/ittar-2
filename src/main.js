@@ -8,9 +8,12 @@ gsap.registerPlugin(ScrollTrigger);
 const state = {
   cart: [],
   scents: {
-    'oud-imperial': { price: 180, name: 'Oud Impérial',   emoji: '⚜️' },
-    'rose-sultan':  { price: 160, name: 'Rose Al-Sultan', emoji: '🌹' },
-    'amber-noir':   { price: 170, name: 'Ambre Noir',     emoji: '🔥' }
+    'oud-imperial':   { price: 180, name: 'Oud Impérial',   emoji: '⚜️' },
+    'rose-sultan':    { price: 160, name: 'Rose Al-Sultan', emoji: '🌹' },
+    'amber-noir':     { price: 170, name: 'Ambre Noir',     emoji: '🔥' },
+    'musk-al-hind':   { price: 155, name: 'Musk Al-Hind',   emoji: '💜' },
+    'jasmine-royale': { price: 150, name: 'Jasmine Royale', emoji: '🌸' },
+    'saffron-noir':   { price: 195, name: 'Saffron Noir',   emoji: '👑' }
   }
 };
 
